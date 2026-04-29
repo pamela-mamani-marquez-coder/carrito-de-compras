@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Carrito - TechStore{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4 fw-bold"><i class="bi bi-cart3 me-2"></i>Tu Carrito de Compras</h2>
+    
+    {% if productos %}
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in productos %}
+                        <tr>
+                            <td>
+                                <div class="fw-bold">{{ item.producto.nombre }}</div>
+                                <small class="text-muted">{{ item.producto.descripcion[:50] }}...</small>
+                            </td>
+                            <td>${{ "%.2f"|format(item.producto.precio) }}</td>
+                            <td>
+                                <form action="/actualizar/{{ item.producto.id }}" method="POST" class="d-flex align-items-center gap-2">
+                                    <input type="number" name="cantidad" value="{{ item.cantidad }}" 
+                                           min="1" max="{{ item.producto.stock }}" class="form-control" style="width: 70px;">
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-arrow-repeat"></i>
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="fw-bold">${{ "%.2f"|format(item.subtotal) }}</td>
+                            <td>
+                                <a href="/eliminar/{{ item.producto.id }}" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <a href="/" class="btn btn-outline-secondary mt-3">
+                <i class="bi bi-arrow-left me-2"></i>Seguir comprando
+            </a>
+            <a href="/limpiar" class="btn btn-outline-danger mt-3 ms-2">
+                <i class="bi bi-cart-x me-2"></i>Vaciar carrito
+            </a>
+        </div>
+        
+        <!-- Resumen -->
+        <div class="col-lg-4 mt-4 mt-lg-0">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-receipt me-2"></i>Resumen de Compra</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Subtotal:</span>
+                        <span class="fw-bold">${{ "%.2f"|format(total) }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Envío:</span>
+                        <span class="text-success">GRATIS</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5>Total:</h5>
+                        <h5 class="text-primary">${{ "%.2f"|format(total) }}</h5>
+                    </div>
+                    <a href="/checkout" class="btn btn-success w-100 py-2">
+                        <i class="bi bi-credit-card me-2"></i>Finalizar Compra
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="bi bi-cart-x display-1 text-muted mb-3"></i>
+        <h3>Tu carrito está vacío</h3>
+        <p class="text-muted">¡Agrega algunos productos!</p>
+        <a href="/" class="btn btn-primary mt-3">
+            <i class="bi bi-shop me-2"></i>Ver productos
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

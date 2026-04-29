@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}TechStore - Inicio{% endblock %}
+
+{% block content %}
+<!-- HERO SECTION MEJORADO -->
+<section class="hero-tech text-center position-relative">
+    <div class="container position-relative z-1">
+        <span class="badge bg-primary mb-3 px-3 py-2 rounded-pill" style="background: rgba(99,102,241,0.2)!important; color: #818cf8; border: 1px solid rgba(99,102,241,0.4);">
+            🔥 Ofertas de Temporada 2026
+        </span>
+        <h1 class="hero-title">
+            Bienvenido a <br>
+            <span class="text-gradient">TechStore</span>
+        </h1>
+        <p class="lead text-white-50 mb-5 mx-auto" style="max-width: 600px;">
+            Encuentra la mejor tecnología con envío gratis y garantía extendida.
+            Tu próximo setup empieza aquí.
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="#productos" class="btn btn-tech btn-lg">
+                <i class="bi bi-grid me-2"></i>Ver Catálogo
+            </a>
+            <a href="/carrito" class="btn btn-outline-tech btn-lg">
+                <i class="bi bi-cart me-2"></i>Mi Carrito
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- SECCIÓN DE PRODUCTOS -->
+<div class="container py-5" id="productos">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Nuestros Productos</h2>
+            <p class="text-white-50 mb-0">Selección premium para ti</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        {% for producto in productos %}
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
+            <div class="product-card d-flex flex-column">
+                <!-- Imagen con icono (puedes cambiar por <img> real si tienes fotos) -->
+                <div class="product-image">
+                    {% if 'Laptop' in producto.nombre %} <i class="bi bi-laptop"></i>
+                    {% elif 'Mouse' in producto.nombre %} <i class="bi bi-mouse"></i>
+                    {% elif 'Teclado' in producto.nombre %} <i class="bi bi-keyboard"></i>
+                    {% elif 'Monitor' in producto.nombre %} <i class="bi bi-display"></i>
+                    {% elif 'Audífonos' in producto.nombre %} <i class="bi bi-headphones"></i>
+                    {% else %} <i class="bi bi-box-seam"></i> {% endif %}
+                </div>
+                
+                <div class="card-body d-flex flex-column flex-grow-1">
+                    <h5 class="card-title">{{ producto.nombre }}</h5>
+                    <p class="card-text flex-grow-1">{{ producto.descripcion }}</p>
+                    
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="price">${{ "%.2f"|format(producto.precio) }}</span>
+                        <span class="badge bg-dark border border-secondary text-secondary">Stock: {{ producto.stock }}</span>
+                    </div>
+                </div>
+                
+                <div class="card-footer bg-transparent border-0 p-3 pt-0">
+                    <form action="/agregar/{{ producto.id }}" method="POST">
+                        <div class="input-group">
+                            <input type="number" name="cantidad" value="1" min="1" max="{{ producto.stock }}" 
+                                   class="form-control bg-transparent text-white border-end-0" 
+                                   style="border-color: rgba(255,255,255,0.1);">
+                            <button type="submit" class="btn btn-tech px-3" title="Agregar al carrito">
+                                <i class="bi bi-cart-plus"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- SCRIPT AOS PARA ANIMACIONES -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+</script>
+{% endblock %}

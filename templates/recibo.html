@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Recibo de Compra - TechStore</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; padding: 30px; color: #2c3e50; background: #fff; }
+        .header { text-align: center; border-bottom: 3px solid #6366f1; padding-bottom: 15px; margin-bottom: 25px; }
+        .header h1 { margin: 0; font-size: 28px; color: #1a1e42; }
+        .header p { margin: 5px 0 0; color: #666; font-size: 14px; }
+        .info-grid { display: flex; justify-content: space-between; margin-bottom: 25px; flex-wrap: wrap; }
+        .info-box { width: 48%; margin-bottom: 10px; }
+        .info-box p { margin: 4px 0; font-size: 14px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px; }
+        th { background: #f8f9fa; padding: 10px; text-align: left; border-bottom: 2px solid #ddd; }
+        td { padding: 10px; border-bottom: 1px solid #eee; }
+        .total-box { text-align: right; font-size: 18px; font-weight: bold; margin-top: 15px; color: #6366f1; }
+        .footer { text-align: center; margin-top: 40px; padding-top: 15px; border-top: 1px dashed #ccc; font-size: 12px; color: #888; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🛒 TECHSTORE</h1>
+        <p>Comprobante Oficial de Compra</p>
+    </div>
+
+    <div class="info-grid">
+        <div class="info-box">
+            <p><strong>Cliente:</strong> {{ pedido.nombre }}</p>
+            <p><strong>Email:</strong> {{ pedido.email }}</p>
+            <p><strong>Teléfono:</strong> {{ pedido.telefono or 'No proporcionado' }}</p>
+        </div>
+        <div class="info-box" style="text-align: right;">
+            <p><strong>Dirección:</strong><br>{{ pedido.direccion }}</p>
+            <p><strong>Fecha:</strong> {{ pedido.fecha }}</p>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th style="width: 60px;">Cant.</th>
+                <th style="width: 100px;">Precio Unit.</th>
+                <th style="width: 100px; text-align: right;">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in pedido.productos %}  <!-- ← Clave 'productos', no 'items' -->
+            <tr>
+                <td>{{ item.nombre }}</td>
+                <td>{{ item.cantidad }}</td>
+                <td>${{ "%.2f"|format(item.precio) }}</td>
+                <td style="text-align: right;">${{ "%.2f"|format(item.subtotal) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="total-box">
+        TOTAL PAGADO: ${{ "%.2f"|format(pedido.total) }}
+    </div>
+
+    <div class="footer">
+        <p>¡Gracias por confiar en TechStore!</p>
+        <p>Este documento es un comprobante generado automáticamente. Conserve este archivo para futuras referencias.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}Confirmación de Compra{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Tarjeta de confirmación (estilo recibo) -->
+            <div class="card glass-card border-0" id="recibo">
+                <div class="card-header bg-success text-white text-center py-4">
+                    <i class="bi bi-check-circle-fill display-4 mb-2"></i>
+                    <h3 class="mb-0">¡Compra Exitosa!</h3>
+                    <p class="mb-0 opacity-75">Gracias por confiar en TechStore</p>
+                </div>
+                
+                <div class="card-body p-4">
+                    <!-- Datos del pedido -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-person me-2"></i>Cliente</h5>
+                            <p class="mb-1"><strong>Nombre:</strong> {{ pedido.nombre }}</p>
+                            <p class="mb-1"><strong>Email:</strong> {{ pedido.email }}</p>
+                            <p class="mb-1"><strong>Teléfono:</strong> {{ pedido.telefono or 'No proporcionado' }}</p>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-receipt me-2"></i>Orden</h5>
+                            <p class="mb-1"><strong>ID:</strong> <span class="text-primary">{{ pedido.orden_id }}</span></p>
+                            <p class="mb-1"><strong>Fecha:</strong> {{ pedido.fecha }}</p>
+                            <p class="mb-1"><strong>Envío:</strong> {{ pedido.direccion }}</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Tabla de productos -->
+                    <h5 class="fw-bold mb-3"><i class="bi bi-cart-check me-2"></i>Productos Comprados</h5>
+                    <div class="table-responsive">
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr class="border-bottom">
+                                    <th>Producto</th>
+                                    <th class="text-end">Cant.</th>
+                                    <th class="text-end">Precio</th>
+                                    <th class="text-end">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in pedido.productos %}
+                                <tr>
+                                    <td>{{ item.nombre }}</td>
+                                    <td class="text-end">{{ item.cantidad }}</td>
+                                    <td class="text-end">${{ "%.2f"|format(item.precio) }}</td>
+                                    <td class="text-end fw-bold">${{ "%.2f"|format(item.subtotal) }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot class="border-top">
+                                <tr>
+                                    <td colspan="3" class="text-end fw-bold fs-5">TOTAL:</td>
+                                    <td class="text-end fw-bold fs-4 text-primary">${{ "%.2f"|format(pedido.total) }}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    
+                    <!-- Mensaje final -->
+                    <div class="alert alert-info mt-4">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <strong>Nota:</strong> Hemos enviado un correo de confirmación a {{ pedido.email }}. 
+                        Guarda este comprobante para futuras referencias.
+                    </div>
+                </div>
+                
+                <div class="card-footer bg-transparent border-0 text-center pb-4">
+                    <!-- Botón para imprimir (genera PDF desde el navegador) -->
+                    <button onclick="window.print()" class="btn btn-outline-primary btn-lg px-5">
+                        <i class="bi bi-printer me-2"></i>Imprimir / Guardar como PDF
+                    </button>
+                    <p class="text-muted small mt-3 mb-0">
+                        <i class="bi bi-lightbulb me-1"></i>
+                        En la ventana de impresión, selecciona "Guardar como PDF" como destino.
+                    </p>
+                    
+                    <div class="mt-4">
+                        <a href="/" class="btn btn-tech me-2">
+                            <i class="bi bi-house me-2"></i>Volver al inicio
+                        </a>
+                        <a href="/carrito" class="btn btn-outline-tech">
+                            <i class="bi bi-cart me-2"></i>Ver carrito
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CSS para impresión (oculta elementos no necesarios al imprimir) -->
+<style media="print">
+    .navbar, footer, button, .no-print { display: none !important; }
+    body { background: white !important; color: black !important; }
+    .card { box-shadow: none !important; border: 1px solid #ddd !important; }
+    #recibo { max-width: 800px; margin: 0 auto; }
+</style>
+
+<!-- Script para mejorar la experiencia de impresión -->
+<script>
+    // Opcional: abrir automáticamente el diálogo de impresión al cargar
+    // window.addEventListener('load', () => { setTimeout(() => window.print(), 1000); });
+</script>
+{% endblock %}
