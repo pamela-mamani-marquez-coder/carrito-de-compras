@@ -1,0 +1,140 @@
+/* FUENTES Y CUERPO */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #0b0f19; /* Fondo oscuro premium */
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+/* NAVBAR TRANSPARENTE */
+.navbar {
+    background: rgba(11, 15, 25, 0.85) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 0;
+}
+.navbar-brand { 
+    color: #fff !important; 
+    font-weight: 700; 
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
+}
+.nav-link { color: rgba(255,255,255,0.7) !important; font-weight: 500; transition: 0.3s; }
+.nav-link:hover { color: #6366f1 !important; }
+
+/* HERO SECTION (Estilo Netic) */
+.hero-tech {
+    background: linear-gradient(135deg, #1a1e42 0%, #0b0f19 100%);
+    padding: 100px 0 60px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+/* Círculos decorativos de fondo */
+.hero-tech::before {
+    content: ''; position: absolute; top: -50px; left: -50px;
+    width: 300px; height: 300px; background: #6366f1;
+    filter: blur(100px); opacity: 0.3; border-radius: 50%;
+}
+.hero-tech::after {
+    content: ''; position: absolute; bottom: -50px; right: -50px;
+    width: 400px; height: 400px; background: #ec4899;
+    filter: blur(100px); opacity: 0.2; border-radius: 50%;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+.text-gradient {
+    background: linear-gradient(to right, #6366f1, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* TARJETAS DE PRODUCTO (Glassmorphism) */
+.product-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    height: 100%;
+    position: relative;
+}
+.product-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(99, 102, 241, 0.5);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.product-image {
+    height: 220px;
+    background: linear-gradient(180deg, rgba(99,102,241,0.1) 0%, rgba(0,0,0,0) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: #6366f1;
+    transition: 0.3s;
+}
+.product-card:hover .product-image {
+    transform: scale(1.05);
+    color: #ec4899;
+}
+
+.card-body { padding: 1.5rem; }
+.card-title { color: #fff; font-weight: 600; margin-bottom: 0.5rem; }
+.card-text { color: #94a3b8; font-size: 0.9rem; line-height: 1.5; }
+
+.price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #38bdf8; /* Azul cyan brillante */
+}
+
+/* BOTONES */
+.btn-tech {
+    background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-weight: 600;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+}
+.btn-tech:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+    color: white;
+}
+
+.btn-outline-tech {
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.2);
+    color: white;
+    border-radius: 12px;
+    transition: 0.3s;
+}
+.btn-outline-tech:hover {
+    background: white;
+    color: #0b0f19;
+    border-color: white;
+}
+
+/* FOOTER */
+footer {
+    background: #05080f;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+/* BADGE DEL CARRITO */
+.badge { font-size: 0.7rem; padding: 0.4em 0.6em; }
+
+/* ANIMACIONES AOS (Fade Up) */
+[data-aos] { pointer-events: none; }
+[data-aos].aos-animate { pointer-events: auto; }
